@@ -183,7 +183,7 @@
   <% books.forEach(book => { 
     const info = book.volumeInfo;
   %>
-    <div class="col-md-6 col-lg-6 mb-4 d-flex">
+    <div class="col-md-4 col-lg-4 mb-4 d-flex">
       <div class="card card-dark w-100">
         <div class="row g-0 w-100 align-items-center">
           <div class="col-auto">
@@ -199,12 +199,10 @@
               <h6 class="mb-2">by <%= info.authors?.[0] || 'Unknown' %></h6>
               <p class="mb-1"><strong>Date Read:</strong> Today</p>
               <p class="mb-1"><strong>Rating:</strong> 5 / 5</p>
-              <p class="text-light small mb-3">
-                <%= info.description?.slice(0, 120) || 'No description available.' %>...
-              </p>
+        
             </div>
             <div>
-              <a href="/readmore" class="btn btn-outline-light btn-md">Read More</a>
+              <a href="/readmore" class="btn btn-outline-light btn-md mt-2">Read More</a>
             </div>
           </div>
         </div>
