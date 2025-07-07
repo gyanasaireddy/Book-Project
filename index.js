@@ -53,7 +53,7 @@ async function getAPIBooks() {
 }
 const GOOGLE_BOOKS_API = "https://www.googleapis.com/books/v1/volumes";
 // const API_KEY = process.env.GOOGLE_BOOKS_KEY;
-const API_KEY = "AIzaSyCZAcv-6nJkrWsT05DfSQAJ-Ch9oVcEt70";
+const API_KEY = "";
 
 app.get("/", async (req, res) => {
   // if (!q) return res.status(400).json({ error: "Missing query parameter q" });
