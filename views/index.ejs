@@ -175,6 +175,8 @@
       <div class="text-center mb-5">
         <h2 style="color: gold; font-size: 3em">My Reviews</h2>
         <p>Here’s what I’ve been reading and what I think about them.</p>
+              <a href="/addReview" class="btn btn-outline-light btn-md mt-2">Add Review</a>
+
       </div>
 
       <div class="row" id="reviewList">
@@ -197,7 +199,7 @@
             <div>
               <h5 class="card-title mb-1"><%= info.title %></h5>
               <h6 class="mb-2">by <%= info.authors?.[0] || 'Unknown' %></h6>
-              <p class="mb-1"><strong>Date Read:</strong> <%= database[i].readdate%></p>
+              <p class="mb-1"><strong>Date Read:</strong> <%= String(database[i].readdate).slice(0,10)%></p>
               <p class="mb-1"><strong>Rating:</strong> <%=database[i].rating %> / 5</p>
         
             </div>

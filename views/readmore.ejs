@@ -35,6 +35,23 @@
       font-size: 1.1rem;
       color: #ffc107;
     }
+
+    .btn-gold {
+  border: 1px solid gold;
+  color: gold;
+  background-color: transparent;
+}
+
+.btn-gold:hover {
+  background-color: gold;
+  color: #121212;
+  textarea {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  width: 100%;
+}
+}
   </style>
 </head>
 <body>
@@ -44,8 +61,29 @@
         <div class="col-6 ">
                 <h1><%= selectedBook.volumeInfo.title %></h1>
     <h5 ><%=selectedBook.volumeInfo.author%></h5>
-    <p><strong>Date Read:</strong> <%=database.readdate %></p>
+    <p><strong>Date Read:</strong> <%=String(database.readdate).slice(0,20)%> %></p>
     <p class="rating">&#9733;&#9733;&#9733;&#9733;&#189; (<%= database.rating%>/5)</p>
+            <div class="row ">
+              <div class="col-4">
+              <button id="editbtn" class="btn btn-outline-light btn-md mt-2" >Edit Review</button>
+              <!-- <button href="" class="btn btn-outline-green btn-md mt-2" onclick="handler('update')">Submit Review</button> -->
+              </div>
+              <div class="col-4">
+
+              <form id="deleteForm" action="/delete-review" method="POST" style="display: inline;">
+  <input type="hidden" name="reviewId" value="<%= selectedBook.volumeInfo.industryIdentifiers[0].identifier %>">
+  <button type="submit" class="btn btn-outline-danger btn-md mt-2" onclick="return confirm('Are you sure you want to delete this review?');">
+    Delete Review
+  </button>
+</form>
+
+              </div>
+
+            </div>
+
+              
+
+
         </div>
         <div class="col-6 d-flex justify-content-center">
     <img src="<%= selectedBook.volumeInfo.imageLinks?.smallThumbnail || '/placeholder.jpg' %>" alt="Book Cover" class="img-fluid book-cover mb-4"/>
@@ -55,9 +93,46 @@
     </div>
 
     <hr/>
-    <p>
+
+    <form action="/update-review" method="POST" id="form1" hidden="true">
+    
+            <div class="mb-3">
+          <input type="hidden" name="updatedReview" value="<%= selectedBook.volumeInfo.industryIdentifiers[0].identifier  %>">
+
+        <label for="review" class="form-label">Your Review</label>
+        <textarea class="form-control" id="review" name="review" rows="11" placeholder="review" value="<%= database.review %>" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-md mt-2 btn-gold">Submit Review</button>
+    </form>
+
+    <p > <pre id = "dbtext" style="white-space: pre-wrap; word-wrap: break-word; overflow-x: hidden;">
       <%= database.review %>
+
+    </pre>
     </p>
   </div>
+  <script>
+ const editBtn = document.getElementById('editbtn');
+  const form = document.getElementById('form1');
+  const dbText = document.getElementById('dbtext');
+  const reviewTextarea = document.getElementById('review');
+  const deleteBtn = document.getElementById('delbtn');
+
+  editBtn.addEventListener('click', () => {
+
+    form.hidden = false;             // Show the form
+    dbText.style.display = 'none';   // Hide the old review
+    reviewTextarea.value = `<%= database.review.replace(/`/g, "\\`").replace(/\\/g, "\\\\") %>`;  // Fill with DB value
+    reviewTextarea.focus();          // Focus cursor
+  });
+
+  deleteBtn.addEventListener('click', () => {
+    const confirmDelete = confirm("Are you sure you want to delete this review?");
+    if (confirmDelete) {
+      window.location.href = "/delete-review/<%= database.id %>";
+    }
+  });
+  </script>
 </body>
 </html>
