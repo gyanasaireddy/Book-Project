@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Book Reviews</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #81c784;
+        --secondary: #212121;
+        --bg: #121212;
+        --text: #e0e0e0;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        margin: 0;
+      }
+
+      /* .cover {
+        height: 100vh;
+        background: url('https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d')
+          no-repeat center center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+        color: white;
+        background-blend-mode: darken ;
+        opacity:0.5;
+      } */
+
+      .cover h1 {
+        font-size: 3rem;
+        font-weight: 600;
+        opacity: 1;
+      }
+
+      .cover p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin-top: 1rem;
+        opacity: 1;
+      }
+      .cover {
+        position: relative;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+        color: white;
+        overflow: hidden;
+      }
+
+      .cover::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d")
+          no-repeat center center/cover;
+        opacity: 0.5;
+        filter: blur(2px);
+        z-index: 0;
+      }
+
+      .cover > * {
+        position: relative;
+        z-index: 1;
+      }
+      .btn-custom {
+        background-color: gold;
+        border: none;
+        color: black;
+        padding: 0.8rem 1.5rem;
+        margin-top: 2rem;
+        font-weight: 600;
+      }
+
+      .section {
+        padding: 4rem 1rem;
+      }
+
+      .card-dark {
+        background-color: #1e1e1e;
+        border: none;
+        color: var(--text);
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+      }
+
+      .book-image {
+        width: 120px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 5px 0 0 5px;
+      }
+
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1rem 1rem 1rem 0;
+      }
+
+      .card-title {
+        margin-bottom: 0.5rem;
+      }
+
+      footer {
+        background: var(--secondary);
+        color: #aaa;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .text-muted {
+        color: white;
+      }
+      .card-dark {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+  height: 100%;
+}
+
+.card-dark:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+.book-image {
+
+  object-fit: cover;
+  border-radius: 8px;
+}
+    </style>
+  </head>
+
+  <body>
+    <!-- Cover -->
+    <div class="cover">
+      <h1>Tracking My Book Reviews</h1>
+      <p>
+        Read. Reflect. Remember. A minimal and modern way to log and revisit the
+        books that shaped me.
+      </p>
+      <a href="#reviews" class="btn btn-custom">View My Reviews</a>
+    </div>
+
+    <!-- Book Reviews Section -->
+    <section id="reviews" class="section container">
+      <div class="text-center mb-5">
+        <h2 style="color: gold; font-size: 3em">My Reviews</h2>
+        <p>Here’s what I’ve been reading and what I think about them.</p>
+      </div>
+
+      <div class="row" id="reviewList">
+        <!-- Reviews will be dynamically injected here -->
+       <% if (locals.books) { %>
+  <% books.forEach(book => { 
+    const info = book.volumeInfo;
+  %>
+    <div class="col-md-6 col-lg-6 mb-4 d-flex">
+      <div class="card card-dark w-100">
+        <div class="row g-0 w-100 align-items-center">
+          <div class="col-auto">
+            <img
+              src="<%= info.imageLinks?.smallThumbnail || '/placeholder.jpg' %>"
+              class="book-image m-3"
+              alt="<%= info.title %>"
+            />
+          </div>
+          <div class="col ps-3 pe-4 py-3 d-flex flex-column justify-content-between">
+            <div>
+              <h5 class="card-title mb-1"><%= info.title %></h5>
+              <h6 class="mb-2">by <%= info.authors?.[0] || 'Unknown' %></h6>
+              <p class="mb-1"><strong>Date Read:</strong> Today</p>
+              <p class="mb-1"><strong>Rating:</strong> 5 / 5</p>
+              <p class="text-light small mb-3">
+                <%= info.description?.slice(0, 120) || 'No description available.' %>...
+              </p>
+            </div>
+            <div>
+              <a href="/readmore" class="btn btn-outline-light btn-md">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+<% } %>
+
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 BookNotes by Gjnana Sai. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main Script -->
+    <script>
+      // Dummy data (replace with real backend data fetch via Express API)
+      const reviews = [
+        {
+          title: "Atomic Habits",
+          author: "James Clear",
+          dateRead: "2025-06-15",
+          rating: 4.8,
+          image: "https://m.media-amazon.com/images/I/91bYsX41DVL.jpg",
+          link: "readmore.html?id=1",
+        },
+        {
+          title: "Deep Work",
+          author: "Cal Newport",
+          dateRead: "2025-05-10",
+          rating: 4.5,
+          image: "https://m.media-amazon.com/images/I/81uwocAMtSL.jpg",
+          link: "readmore.html?id=2",
+        },
+      ];
+
+      // function renderReviews() {
+      //   const reviewList = document.getElementById("reviewList");
+      //   reviews.forEach((book) => {
+      //     const col = document.createElement("div");
+      //     col.className = "col-md-6 col-lg-6 mb-4 d-flex";
+
+      //     const card = document.createElement("div");
+      //     card.className = "card card-dark w-100";
+
+      //     const cardHTML = `
+      //       <div class="row g-0 w-100">
+      //         <div class="col-auto">
+      //           <img src="${book.image}" class="book-image" alt="${book.title}" />
+      //         </div>
+      //         <div class="col" style="margin-left:2rem">
+      //           <div class="card-body">
+      //             <div>
+      //               <h5 class="card-title">${book.title}</h5>
+      //               <h6 >by ${book.author}</h6>
+      //               <p class="mb-1"><strong>Date Read:</strong> ${book.dateRead}</p>
+      //               <p class="mb-2"><strong>Rating:</strong> ${book.rating} / 5</p>
+      //             </div>
+      //             <a href="${book.link}" class="btn btn-outline-light btn-sm mt-auto">Read More</a>
+      //           </div>
+      //         </div>
+      //       </div>
+      //     `;
+
+      //     card.innerHTML = cardHTML;
+      //     col.appendChild(card);
+      //     reviewList.appendChild(col);
+      //   });
+      // }
+
+      // document.addEventListener("DOMContentLoaded", renderReviews);
+    </script>
+  </body>
+</html>
