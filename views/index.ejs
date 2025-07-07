@@ -179,7 +179,7 @@
 
       <div class="row" id="reviewList">
         <!-- Reviews will be dynamically injected here -->
-       <% if (locals.books) { %>
+       <%let i = 0; if (locals.books) { %>
   <% books.forEach(book => { 
     const info = book.volumeInfo;
   %>
@@ -197,12 +197,12 @@
             <div>
               <h5 class="card-title mb-1"><%= info.title %></h5>
               <h6 class="mb-2">by <%= info.authors?.[0] || 'Unknown' %></h6>
-              <p class="mb-1"><strong>Date Read:</strong> Today</p>
-              <p class="mb-1"><strong>Rating:</strong> 5 / 5</p>
+              <p class="mb-1"><strong>Date Read:</strong> <%= database[i].readdate%></p>
+              <p class="mb-1"><strong>Rating:</strong> <%=database[i].rating %> / 5</p>
         
             </div>
             <div>
-              <a href="/readmore" class="btn btn-outline-light btn-md mt-2">Read More</a>
+              <a href="/readmore/<%= encodeURIComponent(info.industryIdentifiers[0].identifier) %>" class="btn btn-outline-light btn-md mt-2">Read More</a>
             </div>
           </div>
         </div>

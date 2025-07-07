@@ -42,13 +42,13 @@
     <a href="/" class="back-link">&larr; Back to Reviews</a>
     <div class=" row d-flex justify-content-around align-items-center">
         <div class="col-6 ">
-                <h1>Atomic Habits</h1>
-    <h5 >by James Clear</h5>
-    <p><strong>Date Read:</strong> June 15, 2025</p>
-    <p class="rating">&#9733;&#9733;&#9733;&#9733;&#189; (4.8/5)</p>
+                <h1><%= selectedBook.volumeInfo.title %></h1>
+    <h5 ><%=selectedBook.volumeInfo.author%></h5>
+    <p><strong>Date Read:</strong> <%=database.readdate %></p>
+    <p class="rating">&#9733;&#9733;&#9733;&#9733;&#189; (<%= database.rating%>/5)</p>
         </div>
         <div class="col-6 d-flex justify-content-center">
-    <img src="https://m.media-amazon.com/images/I/91bYsX41DVL.jpg" alt="Book Cover" class="img-fluid book-cover mb-4"/>
+    <img src="<%= selectedBook.volumeInfo.imageLinks?.smallThumbnail || '/placeholder.jpg' %>" alt="Book Cover" class="img-fluid book-cover mb-4"/>
 
         </div>
 
@@ -56,8 +56,7 @@
 
     <hr/>
     <p>
-      This book changed how I view productivity. Instead of chasing big wins, James Clear talks about the power of small, consistent changes.
-      Every habit compounds. The tone is encouraging, not preachy. And the examples? Relatable and real. Great read if you're stuck in loops or trying to level up daily habits.
+      <%= database.review %>
     </p>
   </div>
 </body>
