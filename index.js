@@ -21,7 +21,7 @@ let titleList = ["atomic habits", "deep work"];
 
 async function getDatabase() {
   titleList = [];
-  const result = await db.query("SELECT * FROM books ORDER BY readdate");
+  const result = await pool.query("SELECT * FROM books ORDER BY readdate");
   // console.log(result.rows[0]);
   dbBook = result.rows;
   result.rows.forEach((b) => {
@@ -106,7 +106,7 @@ app.post("/submit-review", async (req, res) => {
 
     // console.log( '-------------------  ' + getId.data.items);
     const date = new Date();
-    const data = await db.query(
+    const data = await pool.query(
       "INSERT INTO books(title,rating,review,readdate,isbn) VALUES ($1,$2,$3,$4,$5) RETURNING *",
       [
         title,
@@ -129,7 +129,7 @@ app.post("/submit-review", async (req, res) => {
 app.post("/update-review", async (req, res) => {
   const { review } = req.body;
   try {
-    await db.query(
+    await pool.query(
       "UPDATE books SET review = $1,readdate = NOW() WHERE isbn = $2",
       [review, req.body.updatedReview]
     );
@@ -144,7 +144,7 @@ app.post("/update-review", async (req, res) => {
 app.post("/delete-review", async (req, res) => {
   const reviewId = req.body.reviewId;
   try {
-    await db.query("DELETE FROM books WHERE isbn = $1", [reviewId]);
+    await pool.query("DELETE FROM books WHERE isbn = $1", [reviewId]);
     res.redirect("/");
   } catch (err) {
     console.error("Error deleting review:", err);
