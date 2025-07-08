@@ -4,6 +4,7 @@ import axios from "axios";
 const app = express();
 import dotenv from "dotenv"
 dotenv.config();
+const { Pool } = pg;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -14,15 +15,6 @@ const pool = new Pool({
 });
 const port = 3000;
 
-const db = new pg.Client({
-  user: "postgres",
-  password: "",
-  host: "localhost",
-  port: 5432,
-  database: "book_project",
-});
-
-db.connect();
 
 let dbBook = [];
 let titleList = ["atomic habits", "deep work"];
