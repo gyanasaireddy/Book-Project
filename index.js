@@ -23,7 +23,7 @@ const db = new pg.Client({
 });
 
 db.connect();
-const password = "So? You have seen this, fellow developer";
+
 let dbBook = [];
 let titleList = ["atomic habits", "deep work"];
 
