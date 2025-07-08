@@ -2,10 +2,16 @@ import express from "express";
 import pg from "pg";
 import axios from "axios";
 const app = express();
+import dotenv from "dotenv"
+dotenv.config();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
 const port = 3000;
 
 const db = new pg.Client({
